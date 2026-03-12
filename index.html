@@ -1,73 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SafeNova | Personal Safety Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fake Call Pro</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <nav class="navbar">
-        <div class="logo">
-            SafeNova
-            <div class="logo-dot"></div>
+    <div id="setup-screen" class="screen active">
+        <div class="header">
+            <h1>FakeCall</h1>
+            <p>Discreet Escape Utility</p>
         </div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#contacts">Contacts</a></li>
-            <li><a href="#settings">Settings</a></li>
-        </ul>
-        <div class="nav-actions">
-            <a href="login/login.html" class="login-nav-btn">Login</a>
-            <button id="themeToggle" class="theme-btn" aria-label="Toggle Dark Mode">
-                <i class="fa-solid fa-moon"></i>
-            </button>
-        </div>
-    </nav>
-
-    <main class="dashboard-container">
-        <section class="status-bar">
-            <div class="indicator"></div>
-            <p>System Active: Tracking Enabled</p>
-        </section>
-
-        <section class="sos-section">
-            <div class="ripple-container">
-                <button id="sosButton" class="sos-btn">SOS</button>
+        
+        <div class="form-container">
+            <div class="input-group">
+                <label>Caller Identity</label>
+                <input type="text" id="caller-name" placeholder="Mom, Boss, etc.">
             </div>
-            <p class="instruction">Tap to immediately alert authorities and contacts</p>
-        </section>
+            
+            <div class="input-group">
+                <label>Incoming In:</label>
+                <select id="call-delay">
+                    <option value="3">3 Seconds (Quick)</option>
+                    <option value="10">10 Seconds</option>
+                    <option value="30">30 Seconds</option>
+                    <option value="60">1 Minute</option>
+                </select>
+            </div>
 
-        <section class="quick-actions">
-            <button class="action-card">
-                <i class="fa-solid fa-phone-volume"></i>
-                <span>Call Police</span>
-            </button>
-            <button class="action-card">
-                <i class="fa-solid fa-route"></i>
-                <span>Route Home</span>
-            </button>
-            <button class="action-card">
-                <i class="fa-solid fa-location-crosshairs"></i>
-                <span>Share Live</span>
-            </button>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <p>&copy; 2026 SafeNova.</p><br>
-        <p> All rights reserved.</p>
-        <div class="footer-links">
-            <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a>
+            <button id="schedule-btn">Activate Timer</button>
         </div>
-    </footer>
+    </div>
 
-    <script type="module" src="script.js"></script>
+    <div id="ringing-screen" class="screen call-ui">
+        <div class="caller-details">
+            <h2 id="display-name">Unknown</h2>
+            <p class="blink">Incoming Call...</p>
+        </div>
+        
+        <div class="call-actions">
+            <div class="btn-wrap">
+                <button class="circle-btn decline" id="decline-btn">✕</button>
+                <p>Decline</p>
+            </div>
+            <div class="btn-wrap">
+                <button class="circle-btn accept" id="accept-btn">📞</button>
+                <p>Accept</p>
+            </div>
+        </div>
+    </div>
 
+    <div id="active-screen" class="screen call-ui active-bg">
+        <div class="caller-details">
+            <h2 id="active-name">Unknown</h2>
+            <p id="call-timer">00:00</p>
+        </div>
+
+        <div class="keypad-grid">
+            <div class="key"><span>🔇</span><p>Mute</p></div>
+            <div class="key"><span>🔢</span><p>Keypad</p></div>
+            <div class="key"><span>🔊</span><p>Speaker</p></div>
+            <div class="key"><span>➕</span><p>Add</p></div>
+            <div class="key"><span>📹</span><p>Video</p></div>
+            <div class="key"><span>👤</span><p>Contacts</p></div>
+        </div>
+
+        <button class="circle-btn hangup" id="end-btn">📞</button>
+    </div>
+
+    <audio id="ringtone-audio" loop preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/1359/1359-preview.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
 </body>
-
 </html>

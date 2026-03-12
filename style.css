@@ -1,71 +1,132 @@
 :root {
-    --bg: #0f172a;
-    --card: #1e293b;
+    --bg-dark: #0f0f0f;
+    --card-bg: #1a1a1a;
     --text: #ffffff;
-    --accent: #38bdf8;
-    --border: #334155;
+    --text-dim: #888888;
+    --decline: #ff3b30;
+    --accept: #34c759;
+    /* Small Font Scales */
+    --fs-label: 0.7rem;
+    --fs-main: 0.85rem;
+    --fs-title: 1.1rem;
 }
 
-body.light-mode {
-    --bg: #f8fafc;
-    --card: #ffffff;
-    --text: #0f172a;
-    --border: #cbd5e1;
-}
-
-body {
-    background-color: var(--bg);
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: var(--bg-dark);
     color: var(--text);
-    font-family: 'Inter', sans-serif;
-    transition: 0.3s;
-    margin: 0; padding-top: 50px;
-    display: flex; justify-content: center;
+    font-family: -apple-system, system-ui, sans-serif;
+    overflow: hidden;
 }
 
-/* STEALTH MODE CLASS */
-body.stealth-active {
-    filter: brightness(0.05) contrast(1.2);
-    background-color: #000;
+/* Screen Management */
+.screen {
+    display: none;
+    flex-direction: column;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: center;
 }
 
-.app-container { width: 90%; max-width: 400px; }
-.header-row { display: flex; justify-content: space-between; align-items: center; }
-
-#status-bar {
-    padding: 12px; border-radius: 12px; text-align: center;
-    background: #334155; color: #94a3b8; font-weight: bold; margin: 20px 0;
-}
-.status-on { background: #065f46 !important; color: #34d399 !important; border: 1px solid #34d399; }
-
-.card {
-    background: var(--card);
-    padding: 20px; border-radius: 16px; border: 1px solid var(--border);
-    display: flex; align-items: center; gap: 15px; margin-bottom: 15px;
-    position: relative; overflow: hidden;
+.screen.active {
+    display: flex;
 }
 
-/* TOUCH FLASH EFFECT */
-.flash-effect { animation: flash 0.4s; }
-@keyframes flash {
-    0% { background: #000; }
-    50% { background: #fff; }
-    100% { background: var(--card); }
+/* --- Setup Screen Styles --- */
+.header { text-align: center; margin-bottom: 30px; margin-top: 40px; }
+.header h1 { font-size: var(--fs-title); margin: 0; letter-spacing: 1px; }
+.header p { font-size: var(--fs-label); color: var(--text-dim); }
+
+.form-container { width: 100%; max-width: 280px; }
+.input-group { margin-bottom: 15px; }
+.input-group label { 
+    display: block; 
+    font-size: var(--fs-label); 
+    color: var(--text-dim); 
+    margin-bottom: 5px; 
 }
 
-.card-text { flex-grow: 1; }
-.card-text h3 { margin: 0; font-size: 1rem; }
-.card-text p { margin: 0; font-size: 0.8rem; opacity: 0.6; }
+input, select {
+    width: 100%;
+    padding: 10px;
+    background: var(--card-bg);
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: white;
+    font-size: var(--fs-main);
+}
 
-/* THE TOGGLES */
-.switch { position: relative; width: 44px; height: 24px; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider {
-    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #475569; transition: .4s; border-radius: 34px;
+#schedule-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: var(--text);
+    color: black;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
 }
-input:checked + .slider { background-color: var(--accent); }
-.slider:before {
-    position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
-    background-color: white; transition: .4s; border-radius: 50%;
+
+/* --- Call UI (Ringing & Active) --- */
+.call-ui { justify-content: space-around; padding-top: 60px; }
+.caller-details { text-align: center; }
+.caller-details h2 { font-size: 1.8rem; margin: 0; font-weight: 400; }
+.caller-details p { font-size: var(--fs-main); color: var(--text-dim); margin-top: 10px; }
+
+/* Call Animations */
+.blink { animation: blinker 1.5s linear infinite; color: var(--accept); }
+@keyframes blinker { 50% { opacity: 0; } }
+
+/* Buttons & Grid */
+.call-actions { 
+    display: flex; 
+    justify-content: space-between; 
+    width: 100%; 
+    max-width: 250px; 
 }
-input:checked + .slider:before { transform: translateX(20px); }
+
+.btn-wrap { text-align: center; font-size: var(--fs-label); color: var(--text-dim); }
+
+.circle-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.decline { background-color: var(--decline); }
+.accept { background-color: var(--accept); }
+.hangup { background-color: var(--decline); transform: rotate(135deg); }
+
+/* Keypad Grid for Active Call */
+.keypad-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 250px;
+}
+
+.key { text-align: center; }
+.key span { 
+    display: block; 
+    font-size: 1.2rem; 
+    background: rgba(255,255,255,0.1); 
+    width: 50px; 
+    height: 50px; 
+    line-height: 50px; 
+    border-radius: 50%; 
+    margin: 0 auto 5px;
+}
+.key p { font-size: var(--fs-label); margin: 0; color: var(--text-dim); }

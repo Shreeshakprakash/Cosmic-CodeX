@@ -1,82 +1,87 @@
-// 1. THEME SWITCHER
-const themeBtn = document.getElementById('theme-btn');
-themeBtn.addEventListener('click', () => {
-    document.body.classList.toggle('light-mode');
-});
+document.addEventListener('DOMContentLoaded', () => {
+    // Elements
+    const setupScreen = document.getElementById('setup-screen');
+    const ringingScreen = document.getElementById('ringing-screen');
+    const activeScreen = document.getElementById('active-screen');
+    const ringtone = document.getElementById('ringtone-audio');
 
-// 2. STEALTH MODE
-const stealthToggle = document.getElementById('stealthToggle');
-stealthToggle.addEventListener('change', () => {
-    if (stealthToggle.checked) {
-        document.body.classList.add('stealth-active');
-        document.title = "Weather Update";
-    } else {
-        document.body.classList.remove('stealth-active');
-        document.title = "SafeNova";
-    }
-    updateStatus();
-});
+    const scheduleBtn = document.getElementById('schedule-btn');
+    const acceptBtn = document.getElementById('accept-btn');
+    const declineBtn = document.getElementById('decline-btn');
+    const endBtn = document.getElementById('end-btn');
 
-// 3. GESTURE DETECTION (Shake)
-const gestureToggle = document.getElementById('gestureToggle');
-gestureToggle.addEventListener('change', async () => {
-    if (gestureToggle.checked) {
-        // Essential for iOS 13+ and some Androids
-        if (typeof DeviceMotionEvent.requestPermission === 'function') {
-            const permission = await DeviceMotionEvent.requestPermission();
-            if (permission !== 'granted') {
-                alert("Permission for sensors denied.");
-                gestureToggle.checked = false;
-                return;
-            }
-        }
-        window.addEventListener('devicemotion', handleShake);
-    } else {
-        window.removeEventListener('devicemotion', handleShake);
-    }
-    updateStatus();
-});
+    let callInterval;
 
-function handleShake(event) {
-    let acc = event.accelerationIncludingGravity;
-    let threshold = 25; // Change to 35 if it triggers too easily
-    if (Math.abs(acc.x) > threshold || Math.abs(acc.y) > threshold) {
-        alert("🚨 GESTURE SOS TRIGGERED!");
-    }
-}
+    // 1. Schedule Function
+    scheduleBtn.addEventListener('click', () => {
+        const name = document.getElementById('caller-name').value || "Home";
+        const delay = parseInt(document.getElementById('call-delay').value) * 1000;
 
-// 4. VOICE SOS
-const voiceToggle = document.getElementById('voiceToggle');
-const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-recognition.continuous = true;
+        // Update Display Names
+        document.getElementById('display-name').innerText = name;
+        document.getElementById('active-name').innerText = name;
 
-voiceToggle.addEventListener('change', () => {
-    if (voiceToggle.checked) recognition.start();
-    else recognition.stop();
-    updateStatus();
-});
+        scheduleBtn.innerText = "Standby Mode...";
+        scheduleBtn.style.background = "#555";
 
-recognition.onresult = (event) => {
-    const text = event.results[event.results.length - 1][0].transcript.toLowerCase();
-    if (text.includes("help")) alert("🚨 VOICE SOS TRIGGERED!");
-};
-
-// 5. TOUCH FLASH & STATUS
-document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('click', () => {
-        card.classList.add('flash-effect');
-        setTimeout(() => card.classList.remove('flash-effect'), 400);
+        // Logic to trigger call after delay
+        setTimeout(() => {
+            triggerRinging();
+        }, delay);
     });
-});
 
-function updateStatus() {
-    const active = document.querySelectorAll('input:checked').length;
-    const bar = document.getElementById('status-bar');
-    if (active > 0) {
-        bar.innerText = "SYSTEM ARMED";
-        bar.classList.add('status-on');
-    } else {
-        bar.innerText = "SYSTEM DISARMED";
-        bar.classList.remove('status-on');
+    // 2. Ringing Logic
+    function triggerRinging() {
+        switchScreen(ringingScreen);
+        ringtone.play().catch(e => console.log("Audio play blocked: ", e));
+        
+        // Vibrate mobile device
+        if ("vibrate" in navigator) {
+            navigator.vibrate([1000, 500, 1000, 500, 1000]);
+        }
     }
-}
+
+    // 3. Accept Logic
+    acceptBtn.addEventListener('click', () => {
+        ringtone.pause();
+        ringtone.currentTime = 0;
+        if ("vibrate" in navigator) navigator.vibrate(0); // Stop vibration
+        
+        switchScreen(activeScreen);
+        startTimer();
+    });
+
+    // 4. Decline/Hangup Logic
+    const endCall = () => {
+        ringtone.pause();
+        ringtone.currentTime = 0;
+        clearInterval(callInterval);
+        if ("vibrate" in navigator) navigator.vibrate(0);
+        
+        document.getElementById('call-timer').innerText = "00:00";
+        switchScreen(setupScreen);
+        
+        scheduleBtn.innerText = "Activate Timer";
+        scheduleBtn.style.background = "#4cd964";
+    };
+
+    declineBtn.addEventListener('click', endCall);
+    endBtn.addEventListener('click', endCall);
+
+    // Utilities
+    function switchScreen(target) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        target.classList.add('active');
+    }
+
+    function startTimer() {
+        let sec = 0;
+        callInterval = setInterval(() => {
+            sec++;
+            let m = Math.floor(sec / 60);
+            let s = sec % 60;
+            document.getElementById('call-timer').innerText = 
+                `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }, 1000);
+    }
+});
