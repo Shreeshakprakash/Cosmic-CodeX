@@ -8,6 +8,9 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 let map
 let marker
 
+// Get user ID from URL parameter
+const urlParams = new URLSearchParams(window.location.search);
+const trackingUserId = urlParams.get('user');
 
 function initMap(lat, lon) {
 
@@ -35,46 +38,83 @@ function initMap(lat, lon) {
 
 async function loadLocation() {
 
-    // Get the most recent location
-    const { data, error } = await supabase
+    let query = supabase
         .from("live_locations")
         .select("*")
-        .order("time", { ascending: false })
-        .limit(1)
-        .single()
+        .order("time", { ascending: false });
+
+    // If user ID is provided, filter by that user; otherwise show most recent
+    if (trackingUserId) {
+        query = query.eq("user_id", trackingUserId);
+    }
+
+    const { data, error } = await query.limit(1).single();
 
     if (data) {
-
-        initMap(data.latitude, data.longitude)
-
+        initMap(data.latitude, data.longitude);
+        
+        // Update status
+        const statusEl = document.getElementById('trackingStatus');
+        const statusPill = document.getElementById('statusPill');
+        if (statusEl) {
+            statusEl.textContent = trackingUserId ? 'Tracking user in real time' : 'Tracking most recent location';
+            if (statusPill) statusPill.classList.remove('danger');
+        }
+    } else if (error) {
+        console.error("Error loading location:", error);
+        const statusEl = document.getElementById('trackingStatus');
+        const statusPill = document.getElementById('statusPill');
+        if (statusEl) {
+            statusEl.textContent = 'No location data available';
+            if (statusPill) statusPill.classList.add('danger');
+        }
     }
 
 }
 
 loadLocation()
 
-supabase
-    .channel("live-tracking")
+// Set up real-time subscription
+let channel = supabase.channel("live-tracking");
 
-    .on(
-        "postgres_changes",
-        {
-            event: "UPDATE",
-            schema: "public",
-            table: "live_locations"
-        },
+// Subscribe to INSERT events (new locations)
+channel.on(
+    "postgres_changes",
+    {
+        event: "INSERT",
+        schema: "public",
+        table: "live_locations"
+    },
+    (payload) => {
+        // Filter by user if specified
+        if (!trackingUserId || payload.new.user_id === trackingUserId) {
+            const lat = payload.new.latitude;
+            const lon = payload.new.longitude;
 
-        (payload) => {
-
-            const lat = payload.new.latitude
-            const lon = payload.new.longitude
-
-            console.log("Location updated:", lat, lon)
-
-            initMap(lat, lon)
-
+            console.log("Location updated:", lat, lon);
+            initMap(lat, lon);
         }
+    }
+);
 
-    )
+// Subscribe to UPDATE events as well
+channel.on(
+    "postgres_changes",
+    {
+        event: "UPDATE",
+        schema: "public",
+        table: "live_locations"
+    },
+    (payload) => {
+        // Filter by user if specified
+        if (!trackingUserId || payload.new.user_id === trackingUserId) {
+            const lat = payload.new.latitude;
+            const lon = payload.new.longitude;
 
-    .subscribe()
+            console.log("Location updated:", lat, lon);
+            initMap(lat, lon);
+        }
+    }
+);
+
+channel.subscribe();

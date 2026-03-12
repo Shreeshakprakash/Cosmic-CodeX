@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeNova v1.0</title>
+    <link rel="icon" type="image/x-icon" href="../icons/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16x16.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../shared-navbar.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="page-with-navbar">
+    <nav class="sn-navbar">
+        <a href="../index.html" class="sn-logo">
+            SafeNova
+            <div class="sn-logo-dot"></div>
+        </a>
+        <ul class="sn-nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../contacts/contacts.html">Contacts</a></li>
+            <li><a href="../tracking/tracking.html">Tracking</a></li>
+            <li><a href="settings.html" class="is-active">Settings</a></li>
+        </ul>
+        <div class="sn-nav-actions">
+            <div class="sn-user-info" id="userInfo" style="display: none;">
+                <span class="sn-user-name" id="userName">Loading...</span>
+                <button id="logoutBtn" class="sn-logout-btn" aria-label="Logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="app-container">
+        <header>
+            <div class="header-row">
+            </div>
+        </header>
+
+        <div class="settings-group">
+            <div class="card" id="voiceCard">
+                <i data-lucide="mic"></i>
+                <div class="card-text">
+                    <h3>Voice SOS</h3>
+                    <p>Keyword: "Help"</p>
+                </div>
+                <label class="switch"><input type="checkbox" id="voiceToggle"><span class="slider"></span></label>
+            </div>
+
+            <div class="card" id="motionCard">
+                <i data-lucide="zap"></i>
+                <div class="card-text">
+                    <h3>Gesture Detection</h3>
+                    <p>Shake phone to trigger</p>
+                </div>
+                <label class="switch"><input type="checkbox" id="gestureToggle"><span class="slider"></span></label>
+            </div>
+
+            <div class="card" id="stealthCard">
+                <i data-lucide="eye-off"></i>
+                <div class="card-text">
+                    <h3>Stealth Mode</h3>
+                    <p>Disguise app & dim</p>
+                </div>
+                <label class="switch"><input type="checkbox" id="stealthToggle"><span class="slider"></span></label>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

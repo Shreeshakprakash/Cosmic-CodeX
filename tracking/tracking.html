@@ -6,24 +6,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>SafeNova Tracking</title>
+    <link rel="icon" type="image/x-icon" href="../icons/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="tracking.css">
+    <link rel="stylesheet" href="../shared-navbar.css">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 </head>
 
-<body>
+<body class="tracking-page">
 
-    <div class="tracking-container">
+    <nav class="sn-navbar">
+        <a href="../index.html" class="sn-logo">
+            SafeNova
+            <div class="sn-logo-dot"></div>
+        </a>
+        <ul class="sn-nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../contacts/contacts.html">Contacts</a></li>
+            <li><a href="tracking.html" class="is-active">Tracking</a></li>
+            <li><a href="../settings/settings.html">Settings</a></li>
+        </ul>
+        <div class="sn-nav-actions">
+            <div class="sn-user-info" id="userInfo" style="display: none;">
+                <span class="sn-user-name" id="userName">Loading...</span>
+                <button id="logoutBtn" class="sn-logout-btn" aria-label="Logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+            <a href="../login/login.html" class="sn-login-btn" id="loginNavBtn">Login</a>
+        </div>
+    </nav>
 
-        <h1>SafeNova Live Location</h1>
+    <div class="tracking-wrapper">
+        <div class="tracking-container">
 
-        <p class="status">Tracking user in real time</p>
+            <div class="header-row">
+                <h1>SafeNova Live Location</h1>
+                <div class="status-pill" id="statusPill">
+                    <div class="status-dot"></div>
+                    <span class="status-text" id="trackingStatus">Loading location data...</span>
+                </div>
+            </div>
 
-        <div id="map"></div>
+            <div class="map-wrapper">
+                <div id="map"></div>
+            </div>
 
+        </div>
     </div>
 
     <script type="module" src="tracking.js"></script>

@@ -1,46 +1,231 @@
+:root {
+    --track-bg: #0f172a;
+    --track-surface: rgba(30, 41, 59, 0.7);
+    --track-text: #f8fafc;
+    --track-accent: #38bdf8;
+    --track-accent-glow: rgba(56, 189, 248, 0.5);
+    --track-danger: #ff3b30;
+    --track-danger-glow: rgba(255, 59, 48, 0.6);
+    --track-success: #10b981;
+    --track-success-glow: rgba(16, 185, 129, 0.6);
+    --track-border: rgba(255, 255, 255, 0.08);
+}
+
 body {
-
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #0f172a;
-    color: white;
-
+    font-family: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--track-bg);
+    color: var(--track-text);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    background-image:
+        radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.08), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(255, 59, 48, 0.05), transparent 25%);
+    overflow-x: hidden;
+}
 
+body.tracking-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100vh;
+    /* Lock height to viewport */
+    overflow: hidden;
+    /* Prevent body scrolling */
+}
+
+/* Make navbar standard so it's predictable */
+body.tracking-page .sn-navbar {
+    flex-shrink: 0;
+}
+
+.tracking-wrapper {
+    flex: 1;
+    /* Takes up all remaining space */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 1rem 5% 0 5%;
+    /* minimal padding on top, none on bottom */
+    box-sizing: border-box;
+    overflow: hidden;
+    /* No scrolling in wrapper */
 }
 
 .tracking-container {
+    width: 100%;
+    max-width: 1200px;
+    height: calc(100vh - 90px - 1rem);
+    /* Dynamically fit the screen minus navbar + padding */
+    display: flex;
+    flex-direction: column;
+    background: var(--track-surface);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid var(--track-border);
+    border-radius: 20px 20px 0 0;
+    /* flat bottom edge */
+    padding: 20px 30px 0 30px;
+    /* Zero padding on bottom */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+    animation: trackFadeIn 0.5s ease-out;
+}
 
-    width: 90%;
-    max-width: 900px;
-    text-align: center;
+@keyframes trackFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
 
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Subtle top glow line on the card */
+.tracking-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--track-accent), transparent);
+    opacity: 0.5;
+}
+
+.header-row {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 h1 {
-
-    margin-bottom: 10px;
-    color: #38bdf8;
-
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #fff 0%, var(--track-accent) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 10px rgba(56, 189, 248, 0.1);
 }
 
-.status {
+/* Status Indicator Pill */
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--track-border);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
 
-    margin-bottom: 20px;
-    opacity: 0.8;
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--track-success);
+    box-shadow: 0 0 10px var(--track-success-glow);
+    animation: radar-pulse 2s infinite ease-in-out;
+}
 
+/* Red status for specific states */
+.status-pill.danger .status-dot {
+    background: var(--track-danger);
+    box-shadow: 0 0 10px var(--track-danger-glow);
+}
+
+.status-text {
+    opacity: 0.9;
+}
+
+@keyframes radar-pulse {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.3);
+        opacity: 1;
+        box-shadow: 0 0 15px var(--track-success-glow);
+    }
+
+    100% {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+}
+
+/* Map Wrapper for Glow Effect */
+.map-wrapper {
+    flex: 1;
+    /* Automatically takes all remaining height in container */
+    position: relative;
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+    /* Flat bottom to sink into edge */
+    padding: 2px 2px 0 2px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
 }
 
 #map {
-
-    height: 500px;
+    flex: 1;
+    /* Maps takes 100% of wrapper height */
     width: 100%;
+    border-radius: 10px 10px 0 0;
+    z-index: 10;
+}
 
-    border-radius: 12px;
+/* Leaflet Overrides for Dark Mode */
+.leaflet-container {
+    background: #1e293b;
+    font-family: inherit;
+}
 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+/* Responsive */
+@media (max-width: 768px) {
+    .tracking-wrapper {
+        padding: 0;
+        /* Fully flush on mobile */
+    }
 
+    .tracking-container {
+        padding: 16px 16px 0 16px;
+        border-radius: 16px 16px 0 0;
+        height: calc(100vh - 80px);
+        /* Adjust for mobile navbar */
+    }
+
+    .header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
 }

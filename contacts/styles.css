@@ -1,0 +1,198 @@
+/* Core Variables */
+:root {
+    --bg-color: #121212;
+    --surface-color: #1e1e1e;
+    --primary-color: #00e5ff; /* Cyan accent for modern tech feel */
+    --danger-color: #ff3b3b; /* Red for SOS */
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --border-color: #333333;
+    --success-color: #00e676;
+    
+    --font-family: 'Outfit', sans-serif;
+    --border-radius: 16px;
+    --transition-speed: 0.3s;
+}
+
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* Typography */
+h1, h2, h3 {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Layout */
+.container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Inputs & Forms */
+.auth-form {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-group i {
+    position: absolute;
+    left: 16px;
+    color: var(--text-secondary);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 16px 16px 16px 48px;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    outline: none;
+    transition: all var(--transition-speed);
+}
+
+.input-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.2);
+}
+
+/* Buttons */
+.btn {
+    padding: 16px 24px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #000;
+}
+
+.btn-primary:hover, .btn-primary:active {
+    background-color: #00b3cc;
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+/* Login Page Specific */
+.login-page {
+    justify-content: center;
+}
+
+.logo-container {
+    text-align: center;
+    margin-top: 50px;
+    position: relative;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), #0088cc);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 2rem;
+    color: #000;
+    position: relative;
+    z-index: 2;
+}
+
+.pulse-ring {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(0, 229, 255, 0.2);
+    animation: pulse 2s infinite ease-out;
+    z-index: 1;
+}
+
+@keyframes pulse {
+    0% { transform: translateX(-50%) scale(0.8); opacity: 1; }
+    100% { transform: translateX(-50%) scale(1.5); opacity: 0; }
+}
+
+.permissions-notice {
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.permissions-notice p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.permissions-notice i {
+    color: var(--primary-color);
+    margin-right: 5px;
+}
+
+/* Utilities */
+.hidden {
+    display: none !important;
+}

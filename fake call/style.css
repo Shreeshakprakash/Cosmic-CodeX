@@ -1,0 +1,132 @@
+:root {
+    --bg-dark: #0f0f0f;
+    --card-bg: #1a1a1a;
+    --text: #ffffff;
+    --text-dim: #888888;
+    --decline: #ff3b30;
+    --accept: #34c759;
+    /* Small Font Scales */
+    --fs-label: 0.7rem;
+    --fs-main: 0.85rem;
+    --fs-title: 1.1rem;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: var(--bg-dark);
+    color: var(--text);
+    font-family: -apple-system, system-ui, sans-serif;
+    overflow: hidden;
+}
+
+/* Screen Management */
+.screen {
+    display: none;
+    flex-direction: column;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* --- Setup Screen Styles --- */
+.header { text-align: center; margin-bottom: 30px; margin-top: 40px; }
+.header h1 { font-size: var(--fs-title); margin: 0; letter-spacing: 1px; }
+.header p { font-size: var(--fs-label); color: var(--text-dim); }
+
+.form-container { width: 100%; max-width: 280px; }
+.input-group { margin-bottom: 15px; }
+.input-group label { 
+    display: block; 
+    font-size: var(--fs-label); 
+    color: var(--text-dim); 
+    margin-bottom: 5px; 
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    background: var(--card-bg);
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: white;
+    font-size: var(--fs-main);
+}
+
+#schedule-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: var(--text);
+    color: black;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* --- Call UI (Ringing & Active) --- */
+.call-ui { justify-content: space-around; padding-top: 60px; }
+.caller-details { text-align: center; }
+.caller-details h2 { font-size: 1.8rem; margin: 0; font-weight: 400; }
+.caller-details p { font-size: var(--fs-main); color: var(--text-dim); margin-top: 10px; }
+
+/* Call Animations */
+.blink { animation: blinker 1.5s linear infinite; color: var(--accept); }
+@keyframes blinker { 50% { opacity: 0; } }
+
+/* Buttons & Grid */
+.call-actions { 
+    display: flex; 
+    justify-content: space-between; 
+    width: 100%; 
+    max-width: 250px; 
+}
+
+.btn-wrap { text-align: center; font-size: var(--fs-label); color: var(--text-dim); }
+
+.circle-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.decline { background-color: var(--decline); }
+.accept { background-color: var(--accept); }
+.hangup { background-color: var(--decline); transform: rotate(135deg); }
+
+/* Keypad Grid for Active Call */
+.keypad-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 250px;
+}
+
+.key { text-align: center; }
+.key span { 
+    display: block; 
+    font-size: 1.2rem; 
+    background: rgba(255,255,255,0.1); 
+    width: 50px; 
+    height: 50px; 
+    line-height: 50px; 
+    border-radius: 50%; 
+    margin: 0 auto 5px;
+}
+.key p { font-size: var(--fs-label); margin: 0; color: var(--text-dim); }

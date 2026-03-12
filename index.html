@@ -1,79 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Fake Call Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeNova | Personal Safety Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="shared-navbar.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
 </head>
+
 <body>
 
-    <div id="setup-screen" class="screen active">
-        <div class="header">
-            <h1>FakeCall</h1>
-            <p>Discreet Escape Utility</p>
-        </div>
-        
-        <div class="form-container">
-            <div class="input-group">
-                <label>Caller Identity</label>
-                <input type="text" id="caller-name" placeholder="Mom, Boss, etc.">
+    <nav class="sn-navbar">
+        <a href="#home" class="sn-logo">
+            SafeNova
+            <div class="sn-logo-dot"></div>
+        </a>
+        <ul class="sn-nav-links">
+            <li><a href="#home" class="is-active">Home</a></li>
+            <li><a href="/contacts/contacts.html">Contacts</a></li>
+            <li><a href="/fake call/fakecall.html">Fake call</a></li>
+        </ul>
+        <div class="sn-nav-actions">
+            <div class="sn-user-info" id="userInfo" style="display: none;">
+                <span class="sn-user-name" id="userName">Loading...</span>
+                <button id="logoutBtn" class="sn-logout-btn" aria-label="Logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
             </div>
+            <a href="login/login.html" class="sn-login-btn" id="loginNavBtn">Login</a>
+            <button id="themeToggle" class="sn-theme-btn" aria-label="Toggle Dark Mode">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+        <section class="status-bar">
+            <div class="indicator"></div>
+            <p>System Active: Tracking Enabled</p>
+        </section>
+
+        <!-- Safety Timer Section -->
+        <section class="safety-timer-section">
+            <h3><i class="fa-solid fa-clock"></i> Safety Timer</h3>
+            <p class="timer-description">Set a check-in timer. If you don't cancel it, SOS will trigger automatically.</p>
             
-            <div class="input-group">
-                <label>Incoming In:</label>
-                <select id="call-delay">
-                    <option value="3">3 Seconds (Quick)</option>
-                    <option value="10">10 Seconds</option>
-                    <option value="30">30 Seconds</option>
-                    <option value="60">1 Minute</option>
-                </select>
+            <div class="timer-controls" id="timerControls">
+                <button class="timer-option-btn" data-minutes="5">5 min</button>
+                <button class="timer-option-btn" data-minutes="10">10 min</button>
+                <button class="timer-option-btn" data-minutes="15">15 min</button>
+                <div class="custom-timer-input">
+                    <input type="number" id="customTimerInput" placeholder="Custom" min="1" max="120">
+                    <button class="custom-timer-btn" id="customTimerBtn">
+                        <i class="fa-solid fa-play"></i> Start
+                    </button>
+                </div>
             </div>
 
-            <button id="schedule-btn">Activate Timer</button>
-        </div>
-    </div>
-
-    <div id="ringing-screen" class="screen call-ui">
-        <div class="caller-details">
-            <h2 id="display-name">Unknown</h2>
-            <p class="blink">Incoming Call...</p>
-        </div>
-        
-        <div class="call-actions">
-            <div class="btn-wrap">
-                <button class="circle-btn decline" id="decline-btn">✕</button>
-                <p>Decline</p>
+            <div class="timer-display" id="timerDisplay" style="display: none;">
+                <div class="countdown-circle">
+                    <div class="countdown-text" id="countdownText">05:00</div>
+                </div>
+                <button class="cancel-timer-btn" id="cancelTimerBtn">
+                    <i class="fa-solid fa-xmark"></i> Cancel Timer
+                </button>
             </div>
-            <div class="btn-wrap">
-                <button class="circle-btn accept" id="accept-btn">📞</button>
-                <p>Accept</p>
+
+            <!-- Live Tracking Status -->
+            <div class="live-tracking-status" id="liveTrackingStatus" style="display: none;">
+                <div class="tracking-indicator">
+                    <div class="pulse-dot"></div>
+                    <span>📍 Live Location Sharing Active</span>
+                </div>
+                <button class="stop-tracking-btn" id="stopTrackingBtn">
+                    <i class="fa-solid fa-stop"></i> Stop Sharing
+                </button>
             </div>
+        </section>
+
+        <section class="sos-section">
+            <div class="ripple-container">
+                <button id="sosButton" class="sos-btn">SOS</button>
+            </div>
+            <p class="instruction">Tap to immediately alert authorities and contacts</p>
+            <div class="voice-sos-panel">
+                <button id="voiceSosToggle" class="voice-sos-btn" type="button">
+                    <i class="fa-solid fa-microphone"></i>
+                    <span>Disable Voice SOS</span>
+                </button>
+                <p id="voiceSosStatus" class="voice-sos-status">Voice SOS starts automatically and listens for &quot;help&quot;</p>
+            </div>
+        </section>
+
+        <section class="quick-actions">
+            <button class="action-card">
+                <i class="fa-solid fa-phone-volume"></i>
+                <span>Call Police</span>
+            </button>
+            <button class="action-card">
+                <i class="fa-solid fa-route"></i>
+                <span>Route Home</span>
+            </button>
+            <button class="action-card">
+                <i class="fa-solid fa-location-crosshairs"></i>
+                <span>Share Live</span>
+            </button>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 SafeNova.</p><br>
+        <p> All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a>
         </div>
-    </div>
+    </footer>
 
-    <div id="active-screen" class="screen call-ui active-bg">
-        <div class="caller-details">
-            <h2 id="active-name">Unknown</h2>
-            <p id="call-timer">00:00</p>
-        </div>
+    <script type="module" src="script.js"></script>
 
-        <div class="keypad-grid">
-            <div class="key"><span>🔇</span><p>Mute</p></div>
-            <div class="key"><span>🔢</span><p>Keypad</p></div>
-            <div class="key"><span>🔊</span><p>Speaker</p></div>
-            <div class="key"><span>➕</span><p>Add</p></div>
-            <div class="key"><span>📹</span><p>Video</p></div>
-            <div class="key"><span>👤</span><p>Contacts</p></div>
-        </div>
-
-        <button class="circle-btn hangup" id="end-btn">📞</button>
-    </div>
-
-    <audio id="ringtone-audio" loop preload="auto">
-        <source src="https://assets.mixkit.co/active_storage/sfx/1359/1359-preview.mp3" type="audio/mpeg">
-    </audio>
-
-    <script src="script.js"></script>
 </body>
+
 </html>

@@ -7,6 +7,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const loginForm = document.getElementById("loginForm");
     const loginBtn = document.getElementById("loginBtn");
+    const togglePasswordBtn = document.getElementById("togglePasswordBtn");
+    const passwordInput = document.getElementById("password");
+    const eyeIcon = document.getElementById("eyeIcon");
+
+    // Password toggle functionality
+    if (togglePasswordBtn) {
+        togglePasswordBtn.addEventListener("click", () => {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                eyeIcon.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                eyeIcon.classList.replace("fa-eye-slash", "fa-eye");
+            }
+        });
+    }
 
     loginForm.addEventListener("submit", async (e) => {
 
@@ -20,27 +36,39 @@ document.addEventListener("DOMContentLoaded", () => {
         loginBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
         loginBtn.style.pointerEvents = "none";
 
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email,
-            password: password
-        });
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
 
-        if (error) {
-            alert("Invalid email or password");
+            if (error) {
+                throw error;
+            }
+
+            if (data.user) {
+
+                // Store user session
+                localStorage.setItem('safenova_user_id', data.user.id);
+                localStorage.setItem('safenova_user_email', data.user.email);
+
+                console.log("Login successful, redirecting...");
+                
+                loginBtn.innerHTML = "Success ✓";
+                loginBtn.style.background = "#10b981";
+
+                // Redirect immediately - use replace to prevent back button issues
+                setTimeout(() => {
+    window.location.href = "/index.html";
+}, 800);
+            }
+
+        } catch (error) {
+            console.error("Login error:", error);
+            alert("Login failed: " + (error.message || "Invalid email or password"));
 
             loginBtn.innerHTML = originalText;
             loginBtn.style.pointerEvents = "auto";
-            return;
-        }
-
-        if (data.user) {
-
-            loginBtn.innerHTML = "Success";
-            loginBtn.style.background = "#10b981";
-
-            setTimeout(() => {
-                window.location.href = "index.html";
-            }, 1500);
         }
 
     });

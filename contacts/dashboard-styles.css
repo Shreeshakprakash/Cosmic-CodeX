@@ -1,0 +1,201 @@
+/* Add to styles.css */
+
+/* App Header */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    background-color: var(--bg-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo-small {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.icon-btn:hover, .icon-btn.active {
+    color: var(--primary-color);
+}
+
+/* Dashboard Specifics */
+.dash-container {
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 90px; /* Space for bottom nav */
+}
+
+/* Status Indicator */
+.safety-status {
+    background-color: var(--surface-color);
+    padding: 10px 20px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 40px;
+    font-weight: 600;
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.status-dot.green { background-color: var(--success-color); box-shadow: 0 0 10px var(--success-color); }
+.status-dot.red { background-color: var(--danger-color); box-shadow: 0 0 10px var(--danger-color); animation: pulse-dot 1s infinite alternate; }
+
+@keyframes pulse-dot {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+}
+
+/* SOS Button */
+.sos-wrapper {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.sos-ripple {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: rgba(255, 59, 59, 0.1);
+    z-index: 1;
+    animation: ripple 2s infinite ease-in-out;
+}
+
+.ripple-1 { width: 100%; height: 100%; animation-delay: 0s; }
+.ripple-2 { width: 130%; height: 130%; animation-delay: 1s; }
+
+@keyframes ripple {
+    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 1; border: 2px solid var(--danger-color); }
+    100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; border: 2px solid transparent; }
+}
+
+.sos-btn {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: none;
+    background: radial-gradient(circle at center, #ff5e5e 0%, var(--danger-color) 70%, #d32f2f 100%);
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 800;
+    font-family: var(--font-family);
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(255, 59, 59, 0.4), inset 0 -4px 10px rgba(0,0,0,0.3);
+    z-index: 2;
+    transition: transform 0.1s;
+    user-select: none;
+}
+
+.sos-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 5px 15px rgba(255, 59, 59, 0.5), inset 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.sos-btn.active {
+    animation: sos-active-pulse 0.5s infinite alternate;
+}
+
+@keyframes sos-active-pulse {
+    from { transform: scale(1); box-shadow: 0 0 20px var(--danger-color); }
+    to { transform: scale(1.05); box-shadow: 0 0 40px var(--danger-color); }
+}
+
+.action-tips {
+    text-align: center;
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.action-tips p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--surface-color);
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    border-top: 1px solid var(--border-color);
+    z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom, 12px); /* Notch support */
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    gap: 5px;
+    transition: color 0.3s;
+}
+
+.nav-item i {
+    font-size: 1.25rem;
+}
+
+.nav-item.active {
+    color: var(--primary-color);
+}
+
+.nav-item:hover {
+    color: var(--primary-color);
+}
+
+/* Overlay */
+#countdown-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(18, 18, 18, 0.95);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#countdown-timer {
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 30px 0;
+}

@@ -1,0 +1,161 @@
+:root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #ffffff;
+    --accent: #38bdf8;
+    --border: #334155;
+}
+
+body.light-mode {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #0f172a;
+    --border: #cbd5e1;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    transition: 0.3s;
+    margin: 0;
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+body.page-with-navbar {
+    display: block;
+    padding-top: 0;
+}
+
+/* STEALTH MODE CLASS */
+body.stealth-active {
+    filter: brightness(0.05) contrast(1.2);
+    background-color: #000;
+}
+
+.app-container {
+    width: 90%;
+    max-width: 400px;
+}
+
+body.page-with-navbar .app-container {
+    width: 90%;
+    max-width: 400px;
+    margin: 40px auto 0;
+}
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#status-bar {
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    background: #334155;
+    color: #94a3b8;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.status-on {
+    background: #065f46 !important;
+    color: #34d399 !important;
+    border: 1px solid #34d399;
+}
+
+.card {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* TOUCH FLASH EFFECT */
+.flash-effect {
+    animation: flash 0.4s;
+}
+
+@keyframes flash {
+    0% {
+        background: #000;
+    }
+
+    50% {
+        background: #fff;
+    }
+
+    100% {
+        background: var(--card);
+    }
+}
+
+.card-text {
+    flex-grow: 1;
+}
+
+.card-text h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.card-text p {
+    margin: 0;
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+/* THE TOGGLES */
+.switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #475569;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+input:checked+.slider {
+    background-color: var(--accent);
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider:before {
+    transform: translateX(20px);
+}
