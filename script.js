@@ -1,112 +1,82 @@
-const supabaseUrl = "https://bzlijpmugslohymjxwrx.supabase.co";
-const supabaseKey = "sb_publishable_zqTgo87Jj99n3_27vIMZ_w_tKIVpAYq";
-
-<<<<<<< Updated upstream
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-=======
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
-
-const SUPABASE_URL = "https://bzlijpmugslohymjxwrx.supabase.co"
-const SUPABASE_KEY = "sb_publishable_zqTgo87Jj99n3_27vIMZ_w_tKIVpAYq"
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
-
-const themeToggleBtn = document.getElementById('themeToggle');
-const themeIcon = themeToggleBtn.querySelector('i');
-const body = document.body;
->>>>>>> Stashed changes
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const loginForm = document.getElementById("loginForm");
-    const loginBtn = document.getElementById("loginBtn");
-
-    loginForm.addEventListener("submit", async (e) => {
-
-        e.preventDefault();
-
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-
-        const originalText = loginBtn.innerHTML;
-
-        loginBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
-        loginBtn.style.pointerEvents = "none";
-
-<<<<<<< Updated upstream
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email,
-            password: password
-        });
-=======
-async function triggerSOS() {
->>>>>>> Stashed changes
-
-        if (error) {
-            alert("Login failed: " + error.message);
-            loginBtn.innerHTML = originalText;
-            loginBtn.style.pointerEvents = "auto";
-            return;
-        }
-
-        loginBtn.innerHTML = "Success";
-        loginBtn.style.background = "#10b981";
-
-        setTimeout(() => {
-            window.location.href = "dashboard.html";
-        }, 1200);
-
-    });
-
-<<<<<<< Updated upstream
+// 1. THEME SWITCHER
+const themeBtn = document.getElementById('theme-btn');
+themeBtn.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
 });
-=======
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
 
-                const { data, error } = await supabase
-                    .from("live_locations")
-                    .insert({
-                        latitude: lat,
-                        longitude: lon
-                    })
-                    .select();
-
-                if (error) {
-                    console.error("Error sending location to Supabase:", error);
-                    alert("🚨 SOS Sent! Location logged locally.");
-                } else {
-                    alert(`🚨 SafeNova SOS ALERT INITIATED!\n\nLive Coordinates: ${lat.toFixed(4)}, ${lon.toFixed(4)}\nLocation sent to tracking system.\nEmergency contacts and local authorities are being notified.`);
-                    console.log("SOS triggered and sent to Supabase:", lat, lon);
-                }
-
-                resetButton();
-            },
-            (error) => {
-                alert("🚨 SOS Sent! Location access denied or unavailable. Notifying contacts via last known location.");
-                resetButton();
-            }
-        );
+// 2. STEALTH MODE
+const stealthToggle = document.getElementById('stealthToggle');
+stealthToggle.addEventListener('change', () => {
+    if (stealthToggle.checked) {
+        document.body.classList.add('stealth-active');
+        document.title = "Weather Update";
     } else {
-        alert("🚨 Geolocation not supported. Sending basic emergency signal...");
-        resetButton();
+        document.body.classList.remove('stealth-active');
+        document.title = "SafeNova";
+    }
+    updateStatus();
+});
+
+// 3. GESTURE DETECTION (Shake)
+const gestureToggle = document.getElementById('gestureToggle');
+gestureToggle.addEventListener('change', async () => {
+    if (gestureToggle.checked) {
+        // Essential for iOS 13+ and some Androids
+        if (typeof DeviceMotionEvent.requestPermission === 'function') {
+            const permission = await DeviceMotionEvent.requestPermission();
+            if (permission !== 'granted') {
+                alert("Permission for sensors denied.");
+                gestureToggle.checked = false;
+                return;
+            }
+        }
+        window.addEventListener('devicemotion', handleShake);
+    } else {
+        window.removeEventListener('devicemotion', handleShake);
+    }
+    updateStatus();
+});
+
+function handleShake(event) {
+    let acc = event.accelerationIncludingGravity;
+    let threshold = 25; // Change to 35 if it triggers too easily
+    if (Math.abs(acc.x) > threshold || Math.abs(acc.y) > threshold) {
+        alert("🚨 GESTURE SOS TRIGGERED!");
     }
 }
 
-function resetButton() {
-    setTimeout(() => {
-        sosButton.textContent = "SOS";
-        sosButton.style.background = "#e0352b";
-    }, 30000);
+// 4. VOICE SOS
+const voiceToggle = document.getElementById('voiceToggle');
+const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+recognition.continuous = true;
+
+voiceToggle.addEventListener('change', () => {
+    if (voiceToggle.checked) recognition.start();
+    else recognition.stop();
+    updateStatus();
+});
+
+recognition.onresult = (event) => {
+    const text = event.results[event.results.length - 1][0].transcript.toLowerCase();
+    if (text.includes("help")) alert("🚨 VOICE SOS TRIGGERED!");
+};
+
+// 5. TOUCH FLASH & STATUS
+document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => {
+        card.classList.add('flash-effect');
+        setTimeout(() => card.classList.remove('flash-effect'), 400);
+    });
+});
+
+function updateStatus() {
+    const active = document.querySelectorAll('input:checked').length;
+    const bar = document.getElementById('status-bar');
+    if (active > 0) {
+        bar.innerText = "SYSTEM ARMED";
+        bar.classList.add('status-on');
+    } else {
+        bar.innerText = "SYSTEM DISARMED";
+        bar.classList.remove('status-on');
+    }
 }
-
-
-const cards = document.querySelectorAll('.action-card');
-
-cards[0].addEventListener('click', () => alert("Connecting to Emergency Services (911/112)..."));
-cards[1].addEventListener('click', () => alert("Calculating safest route home..."));
-cards[2].addEventListener('click', () => alert("Live tracking link generated. Ready to share."));
->>>>>>> Stashed changes

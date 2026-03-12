@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeNova v1.0</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="header-row">
+                <h1>SafeNova<span>v1.0</span></h1>
+                <button id="theme-btn" class="theme-button">🌓 Mode</button>
+            </div>
+            <div id="status-bar" class="status-off">SYSTEM DISARMED</div>
+        </header>
+
+        <div class="settings-group">
+            <div class="card" id="voiceCard">
+                <i data-lucide="mic"></i>
+                <div class="card-text">
+                    <h3>Voice SOS</h3>
+                    <p>Keyword: "Help"</p>
+                </div>
+                <label class="switch"><input type="checkbox" id="voiceToggle"><span class="slider"></span></label>
+            </div>
+
+            <div class="card" id="motionCard">
+                <i data-lucide="zap"></i>
+                <div class="card-text">
+                    <h3>Gesture Detection</h3>
+                    <p>Shake phone to trigger</p>
+                </div>
+                <label class="switch"><input type="checkbox" id="gestureToggle"><span class="slider"></span></label>
+            </div>
+
+            <div class="card" id="stealthCard">
+                <i data-lucide="eye-off"></i>
+                <div class="card-text">
+                    <h3>Stealth Mode</h3>
+                    <p>Disguise app & dim</p>
+                </div>
+                <label class="switch"><input type="checkbox" id="stealthToggle"><span class="slider"></span></label>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
