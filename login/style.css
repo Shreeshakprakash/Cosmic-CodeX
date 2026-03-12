@@ -1,17 +1,12 @@
 :root {
     --bg-color: #0f1115;
-    /* Deeper background */
     --card-bg: #1a1e27;
-    /* Distinct card background */
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
     --primary: #3b82f6;
-    /* Trustworthy Royal/Sky Blue */
     --primary-hover: #2563eb;
     --accent: #10b981;
-    /* Emerald */
     --sos-color: #ef4444;
-    /* Standard Red */
     --border-color: #334155;
     --input-bg: #0f1115;
 }
@@ -27,184 +22,6 @@ body {
     background-color: var(--bg-color);
     color: var(--text-main);
     min-height: 100vh;
-<<<<<<< Updated upstream
-=======
-    transition: var(--transition);
-}
-
-
-.navbar {
-    background: var(--surface-color);
-    padding: 1.2rem 8%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: var(--transition);
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1.8rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    cursor: pointer;
-}
-
-.logo {
-    display: flex;
-    align-items: baseline;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--text-main);
-    letter-spacing: -1px;
-}
-
-.logo span {
-    font-weight: 400;
-    margin-right: 4px;
-}
-
-.logo-dot {
-    width: 8px;
-    height: 8px;
-    background-color: var(--primary-red);
-    border-radius: 50%;
-    animation: logo-pulse 2s infinite;
-}
-
-@keyframes logo-pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.6);
-    }
-
-    70% {
-        box-shadow: 0 0 0 6px rgba(255, 59, 48, 0);
-    }
-
-    100% {
-        box-shadow: 0 0 0 0 rgba(255, 59, 48, 0);
-    }
-}
-
-.logo span {
-    color: var(--primary-red);
-}
-
-.nav-links {
-    display: flex;
-    list-style: none;
-    align-items: center;
-}
-
-.nav-links li {
-    margin-right: 25px;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: var(--text-main);
-    font-weight: 500;
-    transition: var(--transition);
-}
-
-.nav-links a:hover {
-    color: var(--primary-red);
-}
-
-.theme-btn {
-    background: none;
-    border: none;
-    color: var(--text-main);
-    font-size: 1.2rem;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
-    transition: var(--transition);
-}
-
-.theme-btn:hover {
-    background-color: rgba(127, 140, 141, 0.1);
-}
-
-.nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.login-nav-btn,
-.login-nav-btn:visited,
-.login-nav-btn:active {
-    text-decoration: none;
-    background-color: var(--primary-red);
-    color: white;
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    transition: var(--transition);
-}
-
-.login-nav-btn:hover {
-    background-color: var(--primary-red-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
-}
-
-
-
-.dashboard-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 50px 20px;
-}
-
-.status-bar {
-    background: var(--surface-color);
-    padding: 12px 24px;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 60px;
-    font-weight: 500;
-    transition: var(--transition);
-}
-
-.indicator {
-    width: 12px;
-    height: 12px;
-    background: #2ecc71;
-    border-radius: 50%;
-    animation: blink 2s infinite;
-}
-
-@keyframes blink {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0.5;
-    }
-}
-
-
-.sos-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.ripple-container {
-    position: relative;
->>>>>>> Stashed changes
     display: flex;
     justify-content: center;
     align-items: center;
@@ -235,7 +52,6 @@ body {
     animation: fadeIn 0.5s ease-out;
 }
 
-/* LEFT SECTION */
 .card-left {
     flex: 1;
     background: linear-gradient(145deg, #1e2637 0%, #151a23 100%);
@@ -311,7 +127,6 @@ body {
 }
 
 
-/* RIGHT SECTION */
 .card-right {
     flex: 1.2;
     padding: 60px 50px;
@@ -341,7 +156,6 @@ body {
     gap: 24px;
 }
 
-/* Minimalist Floating Label Inputs */
 .input-group {
     position: relative;
 }
@@ -476,7 +290,7 @@ body {
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
-/* Animations */
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -489,7 +303,7 @@ body {
     }
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .login-card {
         flex-direction: column;

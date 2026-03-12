@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeNova - Sign Up</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="container">
+        <div class="login-wrapper">
+            <div class="login-card">
+
+                <div class="card-left">
+                    <div class="brand">
+                        <div class="logo-container">
+                            <i class="fa-solid fa-shield-halved logo-icon"></i>
+                        </div>
+                        <div class="brand-text">
+                            <h1>SafeNova</h1>
+                            <p>Next-Gen Security.</p>
+                        </div>
+                    </div>
+
+                    <div class="hero-text">
+                        <h2>Join SafeNova,<br>stay protected.</h2>
+                        <p>Create an account to access advanced personal safety features and manage your trusted
+                            network.</p>
+                    </div>
+                </div>
+
+                <div class="card-right">
+                    <div class="form-header">
+                        <h2>Create account</h2>
+                        <p>Start your SafeNova journey</p>
+                    </div>
+
+                    <form id="signupForm" class="login-form">
+                        <div class="input-group">
+                            <input type="text" id="fullname" placeholder=" " required>
+                            <label for="fullname">Full Name</label>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="email" id="email" placeholder=" " required autocomplete="email">
+                            <label for="email">Email address</label>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="password" id="password" placeholder=" " required autocomplete="new-password">
+                            <label for="password">Password</label>
+                            <button type="button" class="password-toggle" id="togglePasswordBtn">
+                                <i class="fa-regular fa-eye" id="eyeIcon"></i>
+                            </button>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="password" id="confirmPassword" placeholder=" " required
+                                autocomplete="new-password">
+                            <label for="confirmPassword">Confirm Password</label>
+                        </div>
+
+                        <div class="privacy-notice" style="margin-top: -10px;">
+                            By creating an account, you agree to our <a href="#">Terms of Service</a> and <a
+                                href="#">Privacy Policy</a>.
+                        </div>
+
+                        <div class="form-actions">
+                            <a href="login.html" class="create-account">Sign in instead</a>
+                            <button type="submit" class="submit-btn" id="signupBtn">
+                                Create
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="signup.js"></script>
+</body>
+
+</html>

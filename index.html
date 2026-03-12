@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeNova | Personal Safety Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            SafeNova
+            <div class="logo-dot"></div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#contacts">Contacts</a></li>
+            <li><a href="#settings">Settings</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="login/login.html" class="login-nav-btn">Login</a>
+            <button id="themeToggle" class="theme-btn" aria-label="Toggle Dark Mode">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+        <section class="status-bar">
+            <div class="indicator"></div>
+            <p>System Active: Tracking Enabled</p>
+        </section>
+
+        <section class="sos-section">
+            <div class="ripple-container">
+                <button id="sosButton" class="sos-btn">SOS</button>
+            </div>
+            <p class="instruction">Tap to immediately alert authorities and contacts</p>
+        </section>
+
+        <section class="quick-actions">
+            <button class="action-card">
+                <i class="fa-solid fa-phone-volume"></i>
+                <span>Call Police</span>
+            </button>
+            <button class="action-card">
+                <i class="fa-solid fa-route"></i>
+                <span>Route Home</span>
+            </button>
+            <button class="action-card">
+                <i class="fa-solid fa-location-crosshairs"></i>
+                <span>Share Live</span>
+            </button>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 SafeNova.</p><br>
+        <p> All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script type="module" src="script.js"></script>
+
+</body>
+
+</html>
